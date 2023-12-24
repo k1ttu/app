@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Navbar from "./Components/Navbar";
+import FooterA from "./Components/footer";
+import LandingPage from "./Components/LandingPage";
 
 function App() {
+  const [load, setLoad] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setLoad(false), 3000);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <body className=" bg-gradient-to-br from-bgstart to-bgend">
+      {
+        load ?
+        <LandingPage />
+          :
+          <Navbar />
+      }
+      <FooterA />
+    </body>
   );
 }
 
