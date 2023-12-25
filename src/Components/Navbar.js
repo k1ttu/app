@@ -102,7 +102,7 @@ const Navbar = () => {
   );
 
   const apiKey2 = "02f08fd72833721d33016717228c9329297010b0"
-  const url2 = `https://api.waqi.info/feed/${location}/?${apiKey2}`
+  const url2 = `https://api.waqi.info/feed/${location}/?token=${apiKey2}`
 
   const apiKey = "69cd96ec13c844d487674304232110";
   const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=yes`;
