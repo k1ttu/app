@@ -3,7 +3,7 @@ import { useState } from "react";
 import "../App.css";
 import logo from './bg.png'
 import { Offcanvas } from "react-bootstrap";
-import video from './shower.mp4'
+
 import compass from './compass.png'
 
 
@@ -64,45 +64,10 @@ const Navbar = () => {
       },
     },
   });
-  const [resString2, setResString2] = useState(
-    {
-      idx: 7397,
-      aqi: 71,
-      time: {
-        v: 1481396400,
-        s: "2016-12-10 19:00:00",
-        tz: "-06:00"
-      },
-      city: {
-        name: "Chi_sp, Illinois",
-        url: "https://aqicn.org/city/usa/illinois/chi_sp/",
-        geo: ["41.913600", "-87.723900"]
-      },
-      iaqi: {
-        pm25: {
-          v: 71
-        }
-      },
-      forecast: {
-        daily: {
-          pm25: [{
-            avg: 154,
-            day: "2020-06-13",
-            max: 157,
-            min: 131
-          }, {
-            avg: 163,
-            day: "2020-06-14",
-            max: 173,
-            min: 137
-          }]
-        }
-      }
-    }
-  );
+  const [resString2, setResString2] = useState({ status: "ok", data: { aqi: 13, idx: 7021, attributions: [{ "url": "http://worldweather.wmo.int", "name": "World Meteorological Organization - surface synoptic observations (WMO-SYNOP)" }, { "url": "https://in.usembassy.gov/embassy-consulates/new-delhi/air-quality-data/", "name": "U.S. Embassy and Consulates' Air Quality Monitor in India", "logo": "US-StateDepartment.png" }, { "url": "https://waqi.info/", "name": "World Air Quality Index Project" }], "city": { "geo": [22.562629699707, 88.363037109375], "name": "Kolkata US Consulate, India (कोलकाता अमेरिकी वाणिज्य दूतावास)", "url": "https://aqicn.org/city/india/kolkata/us-consulate", "location": "" }, "dominentpol": "pm25", "iaqi": { "dew": { "v": 17 }, "h": { "v": 82 }, "p": { "v": 1019 }, "pm25": { "v": 268 }, "t": { "v": 20 }, "w": { "v": 2 } }, "time": { "s": "2023-12-25 09:00:00", "tz": "+05:30", "v": 1703494800, "iso": "2023-12-25T09:00:00+05:30" }, "forecast": { "daily": { "o3": [{ "avg": 4, "day": "2023-12-23", "max": 23, "min": 1 }, { "avg": 4, "day": "2023-12-24", "max": 27, "min": 1 }, { "avg": 5, "day": "2023-12-25", "max": 26, "min": 1 }, { "avg": 6, "day": "2023-12-26", "max": 28, "min": 1 }, { "avg": 5, "day": "2023-12-27", "max": 26, "min": 1 }, { "avg": 5, "day": "2023-12-28", "max": 29, "min": 1 }, { "avg": 6, "day": "2023-12-29", "max": 32, "min": 1 }, { "avg": 1, "day": "2023-12-30", "max": 1, "min": 1 }], "pm10": [{ "avg": 72, "day": "2023-12-23", "max": 73, "min": 64 }, { "avg": 67, "day": "2023-12-24", "max": 73, "min": 56 }, { "avg": 71, "day": "2023-12-25", "max": 77, "min": 58 }, { "avg": 68, "day": "2023-12-26", "max": 73, "min": 58 }, { "avg": 68, "day": "2023-12-27", "max": 73, "min": 58 }, { "avg": 69, "day": "2023-12-28", "max": 73, "min": 58 }, { "avg": 67, "day": "2023-12-29", "max": 73, "min": 53 }, { "avg": 70, "day": "2023-12-30", "max": 73, "min": 58 }, { "avg": 94, "day": "2023-12-31", "max": 123, "min": 52 }], "pm25": [{ "avg": 173, "day": "2023-12-23", "max": 174, "min": 165 }, { "avg": 167, "day": "2023-12-24", "max": 174, "min": 157 }, { "avg": 171, "day": "2023-12-25", "max": 179, "min": 159 }, { "avg": 169, "day": "2023-12-26", "max": 174, "min": 159 }, { "avg": 168, "day": "2023-12-27", "max": 174, "min": 159 }, { "avg": 170, "day": "2023-12-28", "max": 174, "min": 159 }, { "avg": 168, "day": "2023-12-29", "max": 174, "min": 154 }, { "avg": 171, "day": "2023-12-30", "max": 174, "min": 159 }, { "avg": 204, "day": "2023-12-31", "max": 252, "min": 152 }] } }, "debug": { "sync": "2023-12-25T13:21:10+09:00" } } });
 
   const apiKey2 = "02f08fd72833721d33016717228c9329297010b0"
-  const url2 = `https://api.waqi.info/feed/${location}/?${apiKey2}`
+  const url2 = `https://api.waqi.info/feed/${location}/?token=${apiKey2}`
 
   const apiKey = "69cd96ec13c844d487674304232110";
   const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=yes`;
@@ -116,16 +81,17 @@ const Navbar = () => {
       setResString2(data2);
       setResString(data);
       setIsOpen(false);
+      console.log(resString);
+      console.log(resString2);
     } catch (e) {
       console.log(e);
     }
   };
-  let deg = resString.current.wind_degree;
+  
   function updateLocation(e) {
     setLocation(e.target.value);
   }
   const cardHeading = "text-sm text-thin text-white/80 self-start mb-2"
-  const desHeading = "text-2xl font-semibold py-4"
   const heading = "text-white mx-2 text-4xl font-bold"
   const air_quality = [{
     des: "Air quality is good, enjoy the breeze, take a walk in the park.",
@@ -141,7 +107,7 @@ const Navbar = () => {
   {
     des:
       "Unhealthy, it's advisable to wear a face mask.",
-    color: "text-yello-600"
+    color: "text-yellow-600"
   },
   {
     des:
@@ -152,16 +118,19 @@ const Navbar = () => {
     des: "let's just say that you shouldn't be at this place.",
     color: "text-red-700"
   }]
+
+
   return (
     <main className=" flex flex-col animate__animated animate__fadeIn animate__delay-1s justify-center items-center ">
       <nav className="flex align-middle justify-between w-full  h-min  md:py-2  py-1 animate__animated animate__fadeInDown ">
         <img
+        alt="Logo"
           src={logo}
           height={70}
           width={70}
           className="m-0 p-0"
         />
-        <button class='md:hidden mx-4 my-3 cursor-pointer w-9 h-9 bg-none appearance-none' onClick={handleClose}>
+        <button className='md:hidden mx-4 my-3 cursor-pointer w-9 h-9 bg-none appearance-none' onClick={handleClose}>
           <div className="bar block h-[3px] w-full rounded-md my-1 bg-black " ></div>
           <div className="bar block h-[3px] w-full rounded-md my-1 bg-black "></div>
           <div className="bar block h-[3px] w-full rounded-md bg-black my-1 "></div>
@@ -191,9 +160,9 @@ const Navbar = () => {
                 className="bg-black text-white py-1  text-base  w-1/2 border-2 border-gray-500 rounded-lg font-base"
               />
             </form>
-              <button onClick={gotData} className="ml-2 rounded-lg bg-none" >
-                Submit
-              </button>
+            <button onClick={gotData} className="ml-2 rounded-lg bg-none" >
+              Submit
+            </button>
 
           </Offcanvas.Body>
         </Offcanvas>
@@ -222,7 +191,7 @@ const Navbar = () => {
             Feels like {resString.current.feelslike_c}&deg;C due to other factors.
           </h1>
           <div className="flex flex-row justify-center px-10 py-2 align-middle ">
-            <img src={resString.current.condition.icon} className="" height={70} width={70} />
+            <img src={resString.current.condition.icon} alt="It's supposed to be a pic of clouds or something, idk" className="" height={70} width={70} />
             <h3 className="text-2xl text-white font-semibold py-4 ">
               {resString.current.condition.text}
             </h3>
@@ -235,17 +204,17 @@ const Navbar = () => {
 
         <div className="flex flex-col align-top justify-center bg-blue-400 backdrop-blur-lg w-fit rounded-md pt-1 px-1 py-4 items-center my-4 mx-4 max-w-md border-1 border-blue-300">
 
-          <h3 className={cardHeading + "no-underline mb-3" + `${air_quality.at(resString.current.air_quality["us-epa-index"]).color}`}  >
+          <h3 className={cardHeading + "no-underline mb-3" }  >
             Air Quality
           </h3>
           <h3 className={heading}>
             AQI
           </h3>
-          <h3 className={`${air_quality.at(resString.current.air_quality["us-epa-index"]).color} font-bold  text-2xl`}>
-            {resString2.aqi}
+          <h3 className={`${air_quality.at(resString2.data.aqi/100).color} font-bold  text-2xl`}>
+            {resString2?.data.aqi}
           </h3>
-          <h1 className={`${air_quality.at(resString.current.air_quality["us-epa-index"]).color} font-bold text-xl my-2 text-center`}>
-            {air_quality.at(resString.current.air_quality["us-epa-index"] - 1).des}
+          <h1 className={`${air_quality.at(resString2.data.aqi/100).color} font-bold text-xl my-2 text-center`}>
+            {air_quality.at(resString2.data.aqi/100).des}
           </h1>
           <ul className="list-none flex flex-row justify-center my-2">
             <li className="flex flex-col align-middle justify-center border-r-2 px-2 border-l-white">
@@ -345,7 +314,7 @@ const Navbar = () => {
                   <p className="font-semibold text-white/70 text-lg">
                     W
                   </p>
-                  <img src={compass} width={70} height={70} className={`align-middle rotate-[${deg}deg]`} alt="Hello" />
+                  <img src={compass} width={70} height={70} className={`align-middle rotate-[${resString.current.wind_degree}deg]`} alt="It was supposed to be a comapass needle, which doesn't work anyhow." />
                   <p className="font-semibold text-white/70 text-lg">
                     E
                   </p>

@@ -11,15 +11,14 @@ function App() {
   }, []);
 
   return (
-    <body className=" bg-gradient-to-br from-bgstart to-bgend">
+    <main className=" bg-gradient-to-br from-bgstart to-bgend">
       {
         load ?
         <LandingPage />
           :
           <Navbar />
       }
-      
-    </body>
+    </main>
   );
 }
 
