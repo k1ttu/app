@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Components/Navbar";
-import FooterA from "./Components/footer";
+
 import LandingPage from "./Components/LandingPage";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
           :
           <Navbar />
       }
-      <FooterA />
+      
     </body>
   );
 }

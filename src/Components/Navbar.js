@@ -64,6 +64,45 @@ const Navbar = () => {
       },
     },
   });
+  const [resString2, setResString2] = useState(
+    {
+      idx: 7397,
+      aqi: 71,
+      time: {
+        v: 1481396400,
+        s: "2016-12-10 19:00:00",
+        tz: "-06:00"
+      },
+      city: {
+        name: "Chi_sp, Illinois",
+        url: "https://aqicn.org/city/usa/illinois/chi_sp/",
+        geo: ["41.913600", "-87.723900"]
+      },
+      iaqi: {
+        pm25: {
+          v: 71
+        }
+      },
+      forecast: {
+        daily: {
+          pm25: [{
+            avg: 154,
+            day: "2020-06-13",
+            max: 157,
+            min: 131
+          }, {
+            avg: 163,
+            day: "2020-06-14",
+            max: 173,
+            min: 137
+          }]
+        }
+      }
+    }
+  );
+
+  const apiKey2 = "02f08fd72833721d33016717228c9329297010b0"
+  const url2 = `https://api.waqi.info/feed/${location}/?${apiKey2}`
 
   const apiKey = "69cd96ec13c844d487674304232110";
   const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=yes`;
@@ -71,15 +110,17 @@ const Navbar = () => {
   const gotData = async () => {
     try {
       let res = await fetch(url);
+      let res2 = await fetch(url2);
+      let data2 = await res2.json();
       let data = await res.json();
+      setResString2(data2);
       setResString(data);
-      setIsOpen(false)
+      setIsOpen(false);
     } catch (e) {
       console.log(e);
     }
   };
   let deg = resString.current.wind_degree;
-
   function updateLocation(e) {
     setLocation(e.target.value);
   }
@@ -120,39 +161,39 @@ const Navbar = () => {
           width={70}
           className="m-0 p-0"
         />
-        <button class='md:hidden mx-4 my-3 cursor-pointer w-9 h-9 bg-none appearance-none relative' onClick={handleClose}>
+        <button class='md:hidden mx-4 my-3 cursor-pointer w-9 h-9 bg-none appearance-none' onClick={handleClose}>
           <div className="bar block h-[3px] w-full rounded-md my-1 bg-black " ></div>
           <div className="bar block h-[3px] w-full rounded-md my-1 bg-black "></div>
           <div className="bar block h-[3px] w-full rounded-md bg-black my-1 "></div>
         </button>
-
-        <form className="my-2 justify-self-end hidden md:flex items-center align-middle">
-          <input type="email"
-            value={location}
-            onChange={(e) => { updateLocation(e) }}
-            placeholder="Search"
-            className="bg-black text-white py-1  text-base  w-1/2 border-2 border-gray-500 rounded-lg font-base"
-          />
-          <button onClick={gotData} className="ml-2 rounded-lg bg-none" >
+        <div className="hidden md:flex justify-end mx-3 align-middle">
+          <form className="my-2 justify-end hidden md:flex items-center align-middle">
+            <input type="text"
+              onChange={updateLocation}
+              placeholder="Search"
+              className="bg-black text-white py-1  text-base  w-1/2 border-2 border-gray-500 rounded-lg font-base"
+            />
+          </form>
+          <button onClick={gotData} className="self-center hidden md:flex ml-2 rounded-lg bg-none" >
             Submit
           </button>
-        </form>
+        </div>
 
         <Offcanvas className="bg-transparent backdrop-blur-sm md:hidden" show={isOpen} onHide={handleClose} placement="top" >
           <Offcanvas.Header closeButton >
           </Offcanvas.Header>
           <Offcanvas.Body className='md:hidden'>
-            <form className="my-2 justify-self-end items-center align-middle">
-              <input type="email"
+            <form className="my-2 justify-end self-end ">
+              <input type="text"
                 value={location}
-                onChange={(e) => { updateLocation(e) }}
+                onChange={updateLocation}
                 placeholder="Search"
                 className="bg-black text-white py-1  text-base  w-1/2 border-2 border-gray-500 rounded-lg font-base"
               />
+            </form>
               <button onClick={gotData} className="ml-2 rounded-lg bg-none" >
                 Submit
               </button>
-            </form>
 
           </Offcanvas.Body>
         </Offcanvas>
@@ -178,7 +219,7 @@ const Navbar = () => {
 
           </div>
           <h1 className="text-white mx-2 text-lg font-bold">
-            Feels like {resString.current.feelslike_c + 1}&deg;C because of winds.
+            Feels like {resString.current.feelslike_c}&deg;C due to other factors.
           </h1>
           <div className="flex flex-row justify-center px-10 py-2 align-middle ">
             <img src={resString.current.condition.icon} className="" height={70} width={70} />
@@ -201,7 +242,7 @@ const Navbar = () => {
             AQI
           </h3>
           <h3 className={`${air_quality.at(resString.current.air_quality["us-epa-index"]).color} font-bold  text-2xl`}>
-            Around {resString.current.air_quality["us-epa-index"]}00
+            {resString2.aqi}
           </h3>
           <h1 className={`${air_quality.at(resString.current.air_quality["us-epa-index"]).color} font-bold text-xl my-2 text-center`}>
             {air_quality.at(resString.current.air_quality["us-epa-index"] - 1).des}
